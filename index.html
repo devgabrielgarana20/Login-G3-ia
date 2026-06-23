@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>LOGIN G3 IA</title>
+  <!-- arquivo separado: style.css -->
+  <link rel="stylesheet" href="style.css">
+  <!-- arquivo separado: script.js (carregado no final) -->
+</head>
+<body>
+  <!-- fundo com imagem (definida no CSS) -->
+  <div class="background"></div>
+
+  <!-- container principal: substitui o box de login e cadastro -->
+  <div class="glass-card" id="appContainer">
+    <!-- TELA DE LOGIN (exibida por padrão) -->
+    <div id="loginScreen" class="screen active">
+      <h2 class="brand">LOGIN G3 IA</h2>
+      <form id="loginForm" autocomplete="off">
+        <div class="input-group-u">
+          <input type="text" id="loginUsername" placeholder="Usuário" required>
+        </div>
+        <div class="input-group-s">
+          <input type="password" id="loginPassword" placeholder="Senha" required>
+        </div>
+        <div class="options-row">
+          <label class="remember">
+            <input type="checkbox" id="rememberMe"> Lembre-me
+          </label>
+          <a href="#" class="forgot-link" id="forgotLink">esqueceu a senha?</a>
+        </div>
+        <button type="submit" class="btn primary">Login</button>
+        <p class="switch-action">
+          Não tem uma conta? <a href="#" id="showRegisterLink">Registrar</a>
+        </p>
+      </form>
+    </div>
+
+    <!-- TELA DE CADASTRO (oculta inicialmente) -->
+    <div id="registerScreen" class="screen">
+      <h2 class="brand">Criar conta</h2>
+      <form id="registerForm" autocomplete="off">
+        <div class="input-group-u">
+          <input type="text" id="regUsername" placeholder="Usuário" required>
+        </div>
+        <div class="input-group-s">
+          <input type="password" id="regPassword" placeholder="Senha" required>
+        </div>
+        <div class="input-group-s">
+          <input type="password" id="regConfirm" placeholder="Confirmar senha" required>
+        </div>
+        <button type="submit" class="btn primary">Cadastrar</button>
+        <p class="switch-action">
+          Já tem conta? <a href="#" id="showLoginLink">Login</a>
+        </p>
+      </form>
+    </div>
+
+    <!-- mensagem de status / erro (exibida dentro do box) -->
+    <div id="messageBox" class="message-box"></div>
+  </div>
+
+  <!-- script separado -->
+  <script src="script.js"></script>
+</body>
+</html>
