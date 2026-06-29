@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin · Planilha de Usuários</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <!-- TOP BAR -->
+    <header class="topbar">
+        <div class="topbar-left">
+            <i class="fas fa-table"></i>
+            <span>Painel de Controle</span>
+        </div>
+        <div class="topbar-right">
+            <span id="adminNameDisplay">Admin</span>
+            <img id="adminAvatarDisplay" src="" alt="Avatar">
+            <button id="logoutBtn" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Sair</button>
+        </div>
+    </header>
+
+    <!-- CONTAINER PRINCIPAL -->
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <nav>
+                <a href="#" class="sidebar-item active" data-tab="dashboard">
+                    <i class="fas fa-chart-pie"></i> Dashboard
+                </a>
+                <a href="#" class="sidebar-item" data-tab="usuarios">
+                    <i class="fas fa-users"></i> Usuários
+                    <span class="badge" id="userCountBadge">0</span>
+                </a>
+                <a href="#" class="sidebar-item" data-tab="config">
+                    <i class="fas fa-cog"></i> Configurações
+                </a>
+            </nav>
+        </aside>
+
+        <!-- CONTEÚDO -->
+        <main class="content">
+            <!-- Título da página -->
+            <div class="page-header">
+                <h2 id="pageTitle">📊 Dashboard</h2>
+            </div>
+
+            <!-- ===== DASHBOARD ===== -->
+            <div id="tab-dashboard" class="tab-pane active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="statUsers">0</div>
+                        <div class="stat-label">Total de Usuários</div>
+                        <i class="fas fa-user stat-icon"></i>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="statAdmins">0</div>
+                        <div class="stat-label">Administradores</div>
+                        <i class="fas fa-user-shield stat-icon"></i>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="statBanned">0</div>
+                        <div class="stat-label">Banidos</div>
+                        <i class="fas fa-ban stat-icon"></i>
+                    </div>
+                </div>
+                <div class="welcome-box">
+                    <h3>👋 Olá, <span id="welcomeAdmin">Admin</span>!</h3>
+                    <p>Gerencie seus usuários com esta interface estilo planilha.</p>
+                </div>
+            </div>
+
+            <!-- ===== USUÁRIOS ===== -->
+            <div id="tab-usuarios" class="tab-pane">
+                <div class="toolbar">
+                    <div class="toolbar-left">
+                        <button class="btn-add" id="btnAddUser"><i class="fas fa-plus"></i> Novo</button>
+                        <button class="btn-refresh" id="btnRefresh"><i class="fas fa-sync-alt"></i></button>
+                    </div>
+                    <div class="toolbar-right">
+                        <input type="text" id="searchInput" placeholder="🔍 Buscar usuário...">
+                    </div>
+                </div>
+
+                <!-- TABELA ESTILO PLANILHA -->
+                <div class="table-container">
+                    <table class="sheet-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>E-mail</th>
+                                <th>Idade</th>
+                                <th>Nascimento</th>
+                                <th>Admin</th>
+                                <th>Status</th>
+                                <th class="actions-col">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTableBody">
+                            <!-- preenchido via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ===== CONFIGURAÇÕES ===== -->
+            <div id="tab-config" class="tab-pane">
+                <div class="config-box">
+                    <h3>⚙️ Configurações do Administrador</h3>
+                    <form id="configForm">
+                        <div class="form-row">
+                            <label>Nome</label>
+                            <input type="text" id="configName" required>
+                        </div>
+                        <div class="form-row">
+                            <label>E-mail</label>
+                            <input type="email" id="configEmail" required>
+                        </div>
+                        <div class="form-row">
+                            <label>Nova Senha (deixe em branco para manter)</label>
+                            <input type="password" id="configPassword" placeholder="••••••••">
+                        </div>
+                        <button type="submit" class="btn-save"><i class="fas fa-save"></i> Salvar</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ===== MODAL USUÁRIO ===== -->
+    <div id="userModal" class="modal-overlay">
+        <div class="modal-box">
+            <h3><span id="modalTitle">Novo Usuário</span> <button class="modal-close" data-modal="userModal">&times;</button></h3>
+            <form id="userForm">
+                <input type="hidden" id="userId">
+                <div class="form-row">
+                    <label>Nome completo</label>
+                    <input type="text" id="userName" required>
+                </div>
+                <div class="form-row">
+                    <label>E-mail</label>
+                    <input type="email" id="userEmail" required>
+                </div>
+                <div class="form-row">
+                    <label>Senha</label>
+                    <input type="password" id="userPassword" placeholder="Mínimo 6 caracteres">
+                </div>
+                <div class="form-row">
+                    <label>Idade</label>
+                    <input type="number" id="userAge" min="1" max="120">
+                </div>
+                <div class="form-row">
+                    <label>Data de Nascimento</label>
+                    <input type="date" id="userBirth">
+                </div>
+                <div class="form-row">
+                    <label>Administrador</label>
+                    <select id="userAdmin">
+                        <option value="false">Não</option>
+                        <option value="true">Sim</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label>Banido</label>
+                    <select id="userBanned">
+                        <option value="false">Não</option>
+                        <option value="true">Sim</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-save">Salvar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast" class="toast"></div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
